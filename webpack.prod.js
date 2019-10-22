@@ -58,6 +58,7 @@ const configureStyleLoaders = (buildType) => {
 }
 
 module.exports = [
+  // Legacy Config
   merge(commonConfig.legacyConfig, {
     mode: 'production',
     devtool: 'source-map',
@@ -67,17 +68,11 @@ module.exports = [
     },
     module: {
       rules: [
-        configureStyleLoaders()
+        configureStyleLoaders(LEGACY_CONFIG)
       ]
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new MiniCssExtractPlugin({
-        path: path.resolve(__dirname, settings.paths.dist.base),
-        filename: path.join('./css', '[name].[chunkhash].css')
-      })
-    ]
+    }
   }),
+  // Modern Config
   merge(commonConfig.modernConfig, {
     mode: 'production',
     devtool: 'source-map',
@@ -87,7 +82,7 @@ module.exports = [
     },
     module: {
       rules: [
-        configureStyleLoaders()
+        configureStyleLoaders(MODERN_CONFIG)
       ]
     },
     plugins: [

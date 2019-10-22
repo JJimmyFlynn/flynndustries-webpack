@@ -4,9 +4,9 @@
   "description": "Standard webpack configuration to be used across Flynndustries projects",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack --config webpack.dev.js",
+    "debug": "webpack-dev-server --config webpack.dev.js",
     "dev": "webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
-    "prod": "npm run webpack -- --config webpack.prod.js"
+    "prod": "webpack --config webpack.prod.js --progress --hide-modules"
   },
   "author": "John Flynn",
   "license": "MIT",
@@ -27,6 +27,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "ignore-loader": "^0.1.2",
     "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "sass": "^1.23.0",
     "sass-loader": "^8.0.0",
