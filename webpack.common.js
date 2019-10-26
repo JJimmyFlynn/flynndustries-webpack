@@ -7,6 +7,7 @@ const merge = require('webpack-merge')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const WebpackNotifierPlugin = require('webpack-notifier')
+const CopyPlugin = require('copy-webpack-plugin')
 
 // Creates entries object from entries
 // listed in the settings file
@@ -58,11 +59,26 @@ const baseConfig = {
     ]
   },
   plugins: [
+    // Build Notifications
     new WebpackNotifierPlugin({
       excludeWarnings: true,
       skipFirstNotification: true
     }),
-    new VueLoaderPlugin()
+    // Vue Loader Required Plugin Component
+    new VueLoaderPlugin(),
+    // File Copying for Images and Fonts
+    new CopyPlugin([
+      {
+        from: settings.paths.src.images,
+        to: settings.paths.dist.images,
+        toType: 'dir'
+      },
+      {
+        from: settings.paths.src.fonts,
+        to: settings.paths.dist.fonts,
+        toType: 'dir'
+      }
+    ])
   ]
 }
 
