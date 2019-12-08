@@ -5,13 +5,11 @@ module.exports = {
       base: './src',
       js: './src/',
       css: './src/',
-      images: './src/images',
-      fonts: './src/fonts'
+      images: './src/images'
     },
     dist: {
       base: './dist',
-      images: './images',
-      fonts: './fonts'
+      images: './images'
     }
   },
   entries: {

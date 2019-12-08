@@ -59,26 +59,21 @@ const baseConfig = {
     ]
   },
   plugins: [
-    // Build Notifications
-    new WebpackNotifierPlugin({
-      excludeWarnings: true,
-      skipFirstNotification: true
-    }),
     // Vue Loader Required Plugin Component
     new VueLoaderPlugin(),
-    // File Copying for Images and Fonts
+    // File Copying for Images
     new CopyPlugin([
       {
         from: settings.paths.src.images,
         to: settings.paths.dist.images,
         toType: 'dir'
-      },
-      {
-        from: settings.paths.src.fonts,
-        to: settings.paths.dist.fonts,
-        toType: 'dir'
       }
-    ])
+    ]),
+    // Build Notifications
+    new WebpackNotifierPlugin({
+      excludeWarnings: true,
+      skipFirstNotification: true
+    })
   ]
 }
 
