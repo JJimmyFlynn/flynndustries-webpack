@@ -9,7 +9,7 @@ const WebpackDashboardPlugin = require('webpack-dashboard/plugin')
 const settings = require('./webpack.settings')
 const commonConfig = require('./webpack.common')
 
-// Confgures loaders for scss and css
+// Configures loaders for scss and css
 const configureStyleLoaders = (buildType) => {
   // Don't build css for legacy build
   // we'll do it only once during
@@ -35,6 +35,10 @@ const configureStyleLoaders = (buildType) => {
             sourceMap: true
           }
         },
+        // Resolve relative urls in css
+        {
+          loader: 'resolve-url-loader'
+        },
         // Run PostCSS Plugins
         {
           loader: 'postcss-loader',
@@ -54,6 +58,36 @@ const configureStyleLoaders = (buildType) => {
   }
 }
 
+// Configure Image loader
+const configureImageLoader = (buildType) => {
+  if (buildType === LEGACY_CONFIG) {
+    return {
+      test: /\.(png|jpe?g|gif|svg|webp)$/i,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: `${settings.paths.dist.images}/[name].[hash].[ext]`
+          }
+        }
+      ]
+    }
+  }
+  if (buildType === MODERN_CONFIG) {
+    return {
+      test: /\.(png|jpe?g|gif|svg|webp)$/i,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: `${settings.paths.dist.images}/[name].[hash].[ext]`
+          }
+        }
+      ]
+    }
+  }
+}
+
 module.exports = [
   // Legacy config
   merge(commonConfig.legacyConfig, {
@@ -65,7 +99,8 @@ module.exports = [
     },
     module: {
       rules: [
-        configureStyleLoaders(LEGACY_CONFIG)
+        configureStyleLoaders(LEGACY_CONFIG),
+        configureImageLoader(LEGACY_CONFIG)
       ]
     },
     plugins: [new WebpackDashboardPlugin()]
@@ -80,7 +115,8 @@ module.exports = [
     },
     module: {
       rules: [
-        configureStyleLoaders(MODERN_CONFIG)
+        configureStyleLoaders(MODERN_CONFIG),
+        configureImageLoader(MODERN_CONFIG)
       ]
     },
     plugins: [new WebpackDashboardPlugin()]
