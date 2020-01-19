@@ -6,6 +6,7 @@ const merge = require('webpack-merge')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ImageminWebpWebpackPlugin= require("imagemin-webp-webpack-plugin")
 
 const settings = require('./webpack.settings')
 const commonConfig = require('./webpack.common')
@@ -128,6 +129,7 @@ module.exports = [
       ]
     },
     plugins: [
+      new ImageminWebpWebpackPlugin(),
       new MiniCssExtractPlugin({
         path: path.resolve(__dirname, settings.paths.dist.base),
         filename: path.join('./css', '[name].[chunkhash].css')
