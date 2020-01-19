@@ -11,18 +11,9 @@ const settings = require('./webpack.settings')
 const commonConfig = require('./webpack.common')
 
 const configureStyleLoaders = (buildType) => {
-  // Don't build css for legacy build
-  // we'll do it only once during
-  // the modern build
-  if (buildType === LEGACY_CONFIG) {
-    return {
-      test: /\.s[ac]ss$/i,
-      use: 'ignore-loader'
-    }
-  }
 
   // Build the css during the modern build
-  if (buildType === MODERN_CONFIG) {
+  if (buildType === LEGACY_CONFIG) {
     return {
       test: /\.s[ac]ss$/i,
       use: [
@@ -59,6 +50,16 @@ const configureStyleLoaders = (buildType) => {
       ]
     }
   }
+
+  // Don't build css for modern build
+  // we do it only once during
+  // the first/legacy build
+  if (buildType === MODERN_CONFIG) {
+    return {
+      test: /\.s[ac]ss$/i,
+      use: 'ignore-loader'
+    }
+  }
 }
 
 // Configure Image loader
@@ -71,6 +72,26 @@ const configureImageLoader = (buildType) => {
           loader: 'file-loader',
           options: {
             name: `${settings.paths.dist.images}/[name].[hash].[ext]`
+          }
+        },
+        {
+          loader: 'image-webpack-loader',
+          options: {
+            mozjpeg: {
+              progressive: true,
+              quality: 70
+            },
+            // optipng.enabled: false will disable optipng
+            optipng: {
+              enabled: false,
+            },
+            pngquant: {
+              quality: [0.65, 0.90],
+              speed: 4
+            },
+            gifsicle: {
+              interlaced: false,
+            }
           }
         }
       ]
@@ -107,7 +128,10 @@ module.exports = [
       ]
     },
     plugins: [
-      new CleanWebpackPlugin()
+      new MiniCssExtractPlugin({
+        path: path.resolve(__dirname, settings.paths.dist.base),
+        filename: path.join('./css', '[name].[chunkhash].css')
+      })
     ]
   }),
   // Modern Config
@@ -125,10 +149,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new MiniCssExtractPlugin({
-        path: path.resolve(__dirname, settings.paths.dist.base),
-        filename: path.join('./css', '[name].[chunkhash].css')
-      })
+      new CleanWebpackPlugin()
     ]
   })
 ]
