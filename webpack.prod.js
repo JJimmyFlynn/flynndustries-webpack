@@ -2,12 +2,14 @@ const LEGACY_CONFIG = 'legacy'
 const MODERN_CONFIG = 'modern'
 
 const path = require('path')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ImageminWebpWebpackPlugin= require("imagemin-webp-webpack-plugin")
 
+const pkg = require('./package.json');
 const settings = require('./webpack.settings')
 const commonConfig = require('./webpack.common')
 
@@ -113,6 +115,21 @@ const configureImageLoader = (buildType) => {
   }
 }
 
+// Configure Banner Comment
+const configureBanner = () => {
+  return {
+    banner: `
+    /*!
+     * @project ${settings.name}
+     * @name [filebase]
+     * @author ${pkg.author}
+     *
+     */
+    `,
+    raw: true,
+  }
+}
+
 module.exports = [
   // Legacy Config
   merge(commonConfig.legacyConfig, {
@@ -133,7 +150,10 @@ module.exports = [
       new MiniCssExtractPlugin({
         path: path.resolve(__dirname, settings.paths.dist.base),
         filename: path.join('./css', '[name].[chunkhash].css')
-      })
+      }),
+      new webpack.BannerPlugin(
+          configureBanner()
+      ),
     ]
   }),
   // Modern Config
@@ -151,6 +171,9 @@ module.exports = [
       ]
     },
     plugins: [
+      new webpack.BannerPlugin(
+          configureBanner()
+      ),
       new CleanWebpackPlugin()
     ]
   })
