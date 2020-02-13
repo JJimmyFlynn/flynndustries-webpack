@@ -3,11 +3,31 @@ const MODERN_CONFIG = 'modern'
 
 const path = require('path')
 const merge = require('webpack-merge')
+const webpack = require('webpack')
 
 const WebpackDashboardPlugin = require('webpack-dashboard/plugin')
 
 const settings = require('./webpack.settings')
 const commonConfig = require('./webpack.common')
+
+// Configures settings for dev server
+const configureDevServer = () => {
+  return {
+    public: 'http://localhost:8080',
+    contentBase: path.resolve(__dirname, './templates'),
+    host: 'localhost',
+    port: 8080,
+    https: false,
+    hot: true,
+    hotOnly: true,
+    disableHostCheck: true,
+    overlay: true,
+    watchContentBase: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
+  }
+}
 
 // Configures loaders for scss and css
 const configureStyleLoaders = (buildType) => {
@@ -26,7 +46,12 @@ const configureStyleLoaders = (buildType) => {
       test: /\.s[ac]ss$/i,
       use: [
         // Loads css into DOM for development
-        'style-loader',
+        {
+          loader: 'style-loader',
+        },
+        {
+          loader: 'vue-style-loader',
+        },
         // Translates CSS into CommonJS
         {
           loader: 'css-loader',
@@ -93,6 +118,7 @@ module.exports = [
   merge(commonConfig.legacyConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
+    devServer: configureDevServer(),
     output: {
       path: path.resolve(__dirname, settings.paths.dist.base),
       filename: path.join('./js', '[name]-legacy.[hash].js')
@@ -103,12 +129,16 @@ module.exports = [
         configureImageLoader(LEGACY_CONFIG)
       ]
     },
-    plugins: [new WebpackDashboardPlugin()]
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new WebpackDashboardPlugin()
+    ]
   }),
   // Modern Config
   merge(commonConfig.modernConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
+    devServer: configureDevServer(),
     output: {
       path: path.resolve(__dirname, settings.paths.dist.base),
       filename: path.join('./js', '[name].[hash].js')
@@ -119,6 +149,8 @@ module.exports = [
         configureImageLoader(MODERN_CONFIG)
       ]
     },
-    plugins: [new WebpackDashboardPlugin()]
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+    ]
   })
 ]

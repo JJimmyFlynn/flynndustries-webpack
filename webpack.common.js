@@ -66,6 +66,11 @@ const baseConfig = {
     path: path.resolve(__dirname, settings.paths.dist.base),
     publicPath: settings.urls.publicPath
   },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  },
   module: {
     rules: [
       // Vue Loader

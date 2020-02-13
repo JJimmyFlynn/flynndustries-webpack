@@ -7,7 +7,7 @@ const merge = require('webpack-merge')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ImageminWebpWebpackPlugin= require("imagemin-webp-webpack-plugin")
+const ImageminWebpWebpackPlugin= require('imagemin-webp-webpack-plugin')
 
 const pkg = require('./package.json');
 const settings = require('./webpack.settings')

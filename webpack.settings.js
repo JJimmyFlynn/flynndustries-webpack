@@ -1,9 +1,9 @@
 module.exports = {
-  name: 'Skibutlers Craft',
+  name: 'Flynndustries',
   paths: {
     src: {
       base: './src/',
-      js: './src/',
+      js: './src/scripts/',
       css: './src/styles/',
       images: './src/images/'
     },
@@ -19,6 +19,6 @@ module.exports = {
     live: 'https://example.com/',
     local: 'http://example.test/',
     critical: 'http://example.test/',
-    publicPath: '/build/'
+    publicPath: 'http://localhost:8080/dist/'
   }
 }
