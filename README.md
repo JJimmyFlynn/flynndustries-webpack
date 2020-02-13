@@ -18,3 +18,25 @@ To begin developing your site run `npm run dev` which will spin up a local expre
   ` property of `package.json`. The general idea is that the legacy bundle will contain transpiled and pollyfilled
    code for legacy browsers, and the modern build will not contain polyfills or much tranpilation with the assumption
     that modern browsers do not need help running modern javascript. This also make the bundle much smaller (yay!).
+    
+   ## What does this webpack config do?
+    
+- Modern and legacy javascript builds
+- Babel Transpilation and Automatic Polyfilling (via core-js)
+- Vue Template and Style Loading
+- Sourcemaps
+- SASS
+- Postcss Plugin Support
+- Css Minification via CSS Nano
+- HMR and Webpack Dev Server
+- Production File Banner Generation
+- Asset Versioning
+- Image + SVG Optimization
+- Automatic WEBP creation
+- Font Loading (cool...)
+- Webpack Dev Server Dashboard
+
+## What will it do soon?
+
+- Critical CSS Generation
+  

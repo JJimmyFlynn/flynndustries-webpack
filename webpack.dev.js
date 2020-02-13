@@ -25,7 +25,7 @@ const configureDevServer = () => {
     watchContentBase: true,
     headers: {
       'Access-Control-Allow-Origin': '*'
-    },
+    }
   }
 }
 
@@ -47,10 +47,10 @@ const configureStyleLoaders = (buildType) => {
       use: [
         // Loads css into DOM for development
         {
-          loader: 'style-loader',
+          loader: 'style-loader'
         },
         {
-          loader: 'vue-style-loader',
+          loader: 'vue-style-loader'
         },
         // Translates CSS into CommonJS
         {
@@ -130,8 +130,8 @@ module.exports = [
       ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new WebpackDashboardPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new WebpackDashboardPlugin()
     ]
   }),
   // Modern Config
@@ -150,7 +150,7 @@ module.exports = [
       ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+      new webpack.HotModuleReplacementPlugin()
     ]
   })
 ]

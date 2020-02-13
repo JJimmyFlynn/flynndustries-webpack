@@ -83,14 +83,6 @@ const baseConfig = {
   plugins: [
     // Vue Loader Required Plugin Component
     new VueLoaderPlugin(),
-    // File Copying for Images
-    // new CopyPlugin([
-    //     {
-    //         from: settings.paths.src.images,
-    //         to: settings.paths.dist.images,
-    //         toType: 'dir',
-    //     },
-    // ]),
     // Build Notifications
     new WebpackNotifierPlugin({
       excludeWarnings: true,
