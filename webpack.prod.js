@@ -7,13 +7,14 @@ const merge = require('webpack-merge')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin')
+const ImageminWebpWebpackPlugin= require('imagemin-webp-webpack-plugin')
 
-const pkg = require('./package.json')
+const pkg = require('./package.json');
 const settings = require('./webpack.settings')
 const commonConfig = require('./webpack.common')
 
 const configureStyleLoaders = (buildType) => {
+
   // Build the css during the modern build
   if (buildType === LEGACY_CONFIG) {
     return {
@@ -85,14 +86,14 @@ const configureImageLoader = (buildType) => {
             },
             // optipng.enabled: false will disable optipng
             optipng: {
-              enabled: false
+              enabled: false,
             },
             pngquant: {
               quality: [0.65, 0.90],
               speed: 4
             },
             gifsicle: {
-              interlaced: false
+              interlaced: false,
             }
           }
         }
@@ -125,7 +126,7 @@ const configureBanner = () => {
      *
      */
     `,
-    raw: true
+    raw: true,
   }
 }
 
@@ -151,8 +152,8 @@ module.exports = [
         filename: path.join('./css', '[name].[chunkhash].css')
       }),
       new webpack.BannerPlugin(
-        configureBanner()
-      )
+          configureBanner()
+      ),
     ]
   }),
   // Modern Config
@@ -171,7 +172,7 @@ module.exports = [
     },
     plugins: [
       new webpack.BannerPlugin(
-        configureBanner()
+          configureBanner()
       ),
       new CleanWebpackPlugin()
     ]

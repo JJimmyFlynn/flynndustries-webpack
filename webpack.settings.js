@@ -1,14 +1,14 @@
 module.exports = {
-  name: 'Flynndustries',
+  name: 'Skibutlers Craft',
   paths: {
     src: {
-      base: './src/',
-      js: './src/scripts/',
-      css: './src/styles/',
-      images: './src/images/'
+      base: './assets/',
+      js: './assets/scripts/',
+      css: './assets/styles/',
+      images: './assets/images/'
     },
     dist: {
-      base: './build',
+      base: './web/dist',
       images: './images'
     }
   },
@@ -19,6 +19,6 @@ module.exports = {
     live: 'https://example.com/',
     local: 'http://example.test/',
     critical: 'http://example.test/',
-    publicPath: 'http://localhost:8080/dist/'
+    publicPath: () => process.env.PUBLIC_PATH || "/dist/"
   }
 }

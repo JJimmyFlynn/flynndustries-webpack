@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "debug": "webpack-dev-server --config webpack.dev.js",
-    "dev": "webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
+    "dev": "PUBLIC_PATH=http://localhost:8080/dist webpack-dashboard -- webpack-dev-server --config webpack.dev.js",
     "prod": "webpack --config webpack.prod.js --progress --hide-modules"
   },
   "devDependencies": {
@@ -56,7 +56,6 @@
   },
   "dependencies": {
     "core-js": "^3.3.2",
-    "vue": "^2.6.11"
   },
   "browserslist": {
     "production": [
